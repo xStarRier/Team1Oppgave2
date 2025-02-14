@@ -32,22 +32,17 @@
                 topPosition += 6;
             }
             if (topPosition > 24) {
-                leftPosition = 24;
-                topPosition = 0;
+                resetBoard();
             }
 
 
         }
-        function setBackCoordinate(){
+        function setCoordinateBack() {
             leftPosition += 6;
             if (leftPosition > 24) {
                 leftPosition = 0;
                 topPosition -= 6;
             }
-           /* if (topPosition < 20) {
-                leftPosition = 24;
-                topPosition = 0;
-            }*/
         }
         function setNextColor() {
 
@@ -118,7 +113,7 @@
 
             }
             else if (leftPosition == 24) { // flat right
-                
+
                 if (topPosition == 24) {
                     if (puzzleType == 54) return true
                     else return false
@@ -137,100 +132,41 @@
         }
 
 
-        addPuzzlePiece('buttons', true, true, true, true, 'addJigsawType1(leftPosition, topPosition, color, 5)', 1);
-        addPuzzlePiece('buttons', false, true, true, true, 'addJigsawType2(leftPosition, topPosition, color, 1)', 2);
-        addPuzzlePiece('buttons', true, false, true, true, 'addJigsawType3(leftPosition, topPosition, color, 2)', 1);
-        addPuzzlePiece('buttons', true, true, false, true, 'addJigsawType4(leftPosition, topPosition, color, 3)', 2);
-        addPuzzlePiece('buttons', true, true, true, false, 'addJigsawType5(leftPosition, topPosition, color, 4)', 1);
-        addPuzzlePiece('buttons', false, true, true, false, 'addJigsawType6(leftPosition, topPosition, color, 51)', 2);
-        addPuzzlePiece('buttons', false, false, true, true, 'addJigsawType7(leftPosition, topPosition, color, 52)', 1);
-        addPuzzlePiece('buttons', true, false, false, true, 'addJigsawType8(leftPosition, topPosition, color, 54)', 2);
-        addPuzzlePiece('buttons', true, true, false, false, 'addJigsawType9(leftPosition, topPosition, color, 53)', 1);
+        addPuzzlePiece('buttons', true, true, true, true, 'addJigsawType(true, true, true, true,leftPosition, topPosition, color, 5)', 1);
+        addPuzzlePiece('buttons', false, true, true, true, 'addJigsawType(false, true, true, true,leftPosition, topPosition, color, 1)', 2);
+        addPuzzlePiece('buttons', true, false, true, true, 'addJigsawType(true, false, true, true,leftPosition, topPosition, color, 2)', 1);
+        addPuzzlePiece('buttons', true, true, false, true, 'addJigsawType(true, true, false, true,leftPosition, topPosition, color, 3)', 2);
+        addPuzzlePiece('buttons', true, true, true, false, 'addJigsawType(true, true, true, false,leftPosition, topPosition, color, 4)', 1);
+        addPuzzlePiece('buttons', false, true, true, false, 'addJigsawType(false, true, true, false,leftPosition, topPosition, color, 51)', 2);
+        addPuzzlePiece('buttons', false, false, true, true, 'addJigsawType(false, false, true, true,leftPosition, topPosition, color, 52)', 1);
+        addPuzzlePiece('buttons', true, false, false, true, 'addJigsawType(true, false, false, true,leftPosition, topPosition, color, 54)', 2);
+        addPuzzlePiece('buttons', true, true, false, false, 'addJigsawType(true, true, false, false,leftPosition, topPosition, color, 53)', 1);
 
-        function addJigsawType1(left, top, color, puzzleType) {
+        function addJigsawType(b1, b2, b3, b4, left, top, color, puzzleType) {
             if (canIPlacePuzzle(puzzleType)) {
-
-                addPuzzlePiece('board', true, true, true, true, 'removePuzzlepiece()', color, left, top);
+                addPuzzlePiece('board', b1, b2, b3, b4, 'removePuzzlepiece()', color, left, top);
                 pazzlId += 1;
-                //console.log(pazzlId);
                 setNextCoordinate();
                 setNextColor();
             }
             else return
         }
-        function removePuzzlepiece(){
-            document.getElementById(`${pazzlId-1}`).outerHTML="";
+
+
+        function removePuzzlepiece() {
+            document.getElementById(`${pazzlId - 1}`).outerHTML = "";
             pazzlId -= 1;
-            setBackCoordinate();
+            setCoordinateBack();
             setNextColor();
         }
 
-        function addJigsawType2(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', false, true, true, true, 'removePuzzlepiece()', color, left, top);
-               
-                setNextCoordinate();
-                setNextColor()
-
-            }
+        function resetBoard() {
+            document.getElementById('board').outerHTML = `<div id="board" style="grid-area: board;"></div>`;
+            leftPosition = 24;
+            topPosition = 0;
+            color = 1;
+            pazzlId = 1;
         }
-        function addJigsawType3(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', true, false, true, true, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType4(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', true, true, false, true, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType5(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', true, true, true, false, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType6(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', false, true, true, false, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType7(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', false, false, true, true, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType8(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', true, false, false, true, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-        function addJigsawType9(left, top, color, puzzleType) {
-            if (canIPlacePuzzle(puzzleType)) {
-                addPuzzlePiece('board', true, true, false, false, 'removePuzzlepiece()', color, left, top);
-                pazzlId += 1;
-                setNextCoordinate();
-                setNextColor()
-            }
-        }
-      
 
         function addPuzzlePiece(toId, hasTop, hasRight, hasBottom, hasLeft, onclick, color, leftPosition, topPosition) {
             let style = '';
@@ -315,7 +251,7 @@
             `;
 
 
-              </script>
+    </script>
 </body>
 
 </html>
